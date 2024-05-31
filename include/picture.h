@@ -51,4 +51,39 @@ public:
         }
         return result;
     }
+    void add_edge(int from_id, int to_id, const Distance& d) {
+        auto temp = find_if(graph.begin(), graph.end(),
+            [from_id](const Vertex& v) { return v._id == from_id; });
+        if (temp != graph.end()) {
+            temp->edges.push_back(Edge{ d, to_id });
+        }
+    }
+    bool remove_edge(int from_id, int to_id) {
+        auto temp = find_if(graph.begin(), graph.end(),
+            [from_id](const Vertex& v) { return v._id == from_id; });
+        if (temp == graph.end()) return false;
+
+        auto& edges = temp->edges;
+        auto edge_it = remove_if(edges.begin(), edges.end(),
+            [to_id](const Edge& e) { return e._id == to_id; });
+        if (edge_it == edges.end()) return false;
+
+        edges.erase(edge_it, edges.end());
+        return true;
+    }
+    bool remove_edge(const Edge& e, int from_id) {
+        return remove_edge(from_id, e._id);
+    }
+    bool has_edge(int from_id, int to_id) const {
+        auto temp = find_if(graph.begin(), graph.end(),
+            [from_id](const Vertex& v) { return v._id == from_id; });
+        if (temp == graph.end()) return false;
+
+        const auto& edges = temp->edges;
+        return any_of(edges.begin(), edges.end(),
+            [to_id](const Edge& e) { return e._id == to_id; });
+    }
+    bool has_edge(const Edge& e, int from_id) const {
+        return has_edge(from_id, e._id);
+    }
 };
