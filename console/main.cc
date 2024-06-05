@@ -3,7 +3,7 @@
 using namespace graph;
 int main()
 {
-    graph::Graph<string> g;
+    Graph<string> g;
     g.add_vertex(1, "A");
     g.add_vertex(2, "B");
     g.add_vertex(3, "C");
@@ -35,5 +35,18 @@ int main()
     int optimal_store_id = g.optimal_store();
     cout << "Optimal store location: " << optimal_store_id << endl;
 
+
+    Graph<string> q;
+    q.add_vertex(1, "5");
+    q.add_vertex(2, "7");
+    q.add_vertex(3, "8");
+    q.add_vertex(4, "A");
+    q.add_edge(1, 2, 1.0);
+    q.add_edge(2, 1, 1.0);
+    q.add_edge(3, 2, 2.0);
+    q.add_edge(3, 1, 2.0);
+    q.add_edge(2, 3, 2.0);
+    q.add_edge(1, 3, 4.0);
+    cout << q.is_full();
     return 0;
 }

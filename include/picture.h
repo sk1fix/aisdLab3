@@ -179,5 +179,16 @@ namespace graph {
             }
             return best_id;
         }
+
+        bool is_full() {
+            for (const auto& [id, _] : graph) {
+                for (const auto& [other_id, _] : graph) {
+                    if (id != other_id)
+                        if (!has_edge(id, other_id) || !has_edge(other_id, id))
+                            return false;
+                }
+            }
+            return true;
+        }
     };
 }
